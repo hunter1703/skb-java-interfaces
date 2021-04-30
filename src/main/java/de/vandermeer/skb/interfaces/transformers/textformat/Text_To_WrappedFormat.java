@@ -3,9 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,9 +26,11 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import de.vandermeer.skb.interfaces.transformers.IsTransformer;
 
+import static de.vandermeer.skb.interfaces.transformers.StringUtils.trim;
+
 /**
  * Takes some text and returns formatted text with optionally different width for top/bottom.
- * 
+ *
  * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
  * @version    v0.0.2 build 170502 (02-May-17) for Java 1.8
  * @since      v0.0.1
@@ -102,7 +104,7 @@ public interface Text_To_WrappedFormat extends IsTransformer<String, Pair<ArrayL
 				if(ar.length<=topLines){
 					//all lines done, cleanup
 					for(String str : ar){
-						topList.add(str.trim());
+						topList.add(trim(str));
 					}
 					if(wln==true){
 						//if we had a conditional linebreak there might be more text, remove the line we processed
@@ -118,7 +120,7 @@ public interface Text_To_WrappedFormat extends IsTransformer<String, Pair<ArrayL
 					//we have more lines than we need, so remove the text we have from the builder and copy processed lines
 					StrBuilder replace = new StrBuilder();
 					for(int i=0; i<topLines; i++){
-						topList.add(ar[i].trim());
+						topList.add(trim(ar[i]));
 						replace.appendSeparator(' ').append(ar[i]);
 					}
 					if(wln==true){
@@ -148,7 +150,7 @@ public interface Text_To_WrappedFormat extends IsTransformer<String, Pair<ArrayL
 			s = WordUtils.wrap(s, this.getWidth(), LINEBREAK, true);
 			StrTokenizer tok = new StrTokenizer(s, LINEBREAK).setIgnoreEmptyTokens(false);
 			for(String str : tok.getTokenArray()){
-				bottomList.add(str.trim());
+				bottomList.add(trim(str));
 			}
 		}
 
